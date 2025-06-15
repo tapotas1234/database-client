@@ -1,0 +1,18 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/userService</property>
+        <property name="hibernate.connection.username">Overlord</property>
+        <property name="hibernate.connection.password">admin</property>
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="logging.level.org.hibernate.SQL">DEBUG</property>
+
+        <!-- Entity-классы -->
+        <mapping class="model.User"/>
+    </session-factory>
+</hibernate-configuration>
