@@ -1,19 +1,28 @@
 package model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name="users")
+@NoArgsConstructor
+@Getter
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="user_id")
-    @Getter
     Integer id;
 
     @Column
@@ -33,8 +42,6 @@ public class User {
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     LocalDateTime createdAt;
-
-    public User(){}
 
     public User(String name, Integer age) {
         this.name = name;

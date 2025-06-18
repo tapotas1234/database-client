@@ -11,6 +11,12 @@
   <properties>
     <hibernate.version>6.6.13.Final</hibernate.version>
     <postgresql.version>42.7.3</postgresql.version>
+    <log4j.version>2.24.0</log4j.version>
+    <jakarta.version>3.0.2</jakarta.version>
+    <junit.jupiter.version>5.8.1</junit.jupiter.version>
+    <junit.platform.version>1.8.1</junit.platform.version>
+    <lombok.version>1.18.38</lombok.version>
+    <maven-compiler.version>3.11.0</maven-compiler.version>
   </properties>
 
   <dependencies>
@@ -20,7 +26,6 @@
       <version>${hibernate.version}</version>
     </dependency>
 
-    <!-- PostgreSQL Driver -->
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
@@ -30,40 +35,59 @@
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
-      <version>2.24.0</version>
+      <version>${log4j.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-api</artifactId>
-      <version>2.24.0</version>
+      <version>${log4j.version}</version>
     </dependency>
 
-
-    <!-- Jakarta Validation -->
     <dependency>
       <groupId>jakarta.validation</groupId>
       <artifactId>jakarta.validation-api</artifactId>
-      <version>3.0.2</version>
+      <version>${jakarta.version}</version>
     </dependency>
 
-    <!-- Test (единая версия) -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.2</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>${junit.jupiter.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>${junit.jupiter.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
+      <version>${junit.jupiter.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-suite</artifactId>
+      <version>${junit.platform.version}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.hibernate.orm</groupId>
       <artifactId>hibernate-ant</artifactId>
-      <version>6.1.4.Final</version>
+      <version>${hibernate.version}</version>
     </dependency>
+
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.38</version>
+      <version>${lombok.version}</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>
@@ -73,10 +97,10 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.11.0</version>
+        <version>${maven-compiler.version}</version>
         <configuration>
-          <source>18</source>
-          <target>18</target>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
         </configuration>
       </plugin>
     </plugins>

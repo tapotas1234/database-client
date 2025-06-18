@@ -3,9 +3,9 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/userService</property>
-        <property name="hibernate.connection.username">Overlord</property>
-        <property name="hibernate.connection.password">admin</property>
+        <property name="hibernate.connection.url">${UserServiceDBUrl}</property>
+        <property name="hibernate.connection.username">${UserServiceLogin}</property>
+        <property name="hibernate.connection.password">${UserServicePassword}</property>
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.show_sql">true</property>
