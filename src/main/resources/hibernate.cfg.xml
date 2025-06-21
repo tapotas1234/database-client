@@ -13,6 +13,6 @@
         <property name="logging.level.org.hibernate.SQL">DEBUG</property>
 
         <!-- Entity-классы -->
-        <mapping class="model.User"/>
+        <mapping class="com.github.tapotas1234.model.User"/>
     </session-factory>
 </hibernate-configuration>

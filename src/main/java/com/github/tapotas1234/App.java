@@ -1,8 +1,11 @@
-import model.User;
+package com.github.tapotas1234;
+
+import com.github.tapotas1234.dao.UserDAOImpl;
+import com.github.tapotas1234.model.User;
 
 import java.util.Scanner;
 
-public class UserService {
+public class App {
     public static void main( String[] args ) {
         while (true) {
             System.out.println("Выберите команду:\n" +
@@ -15,32 +18,35 @@ public class UserService {
             Scanner sc = new Scanner(System.in);
             int command = sc.nextInt();
             int userId;
-            UserDAOImpl service = new UserDAOImpl();
+            UserService service = new UserService(new UserDAOImpl());
             switch (command) {
                 case (1) -> System.out.println(service.getAllUsers());
                 case (2) -> {
                     System.out.println("Введите id пользователя: ");
                     userId = sc.nextInt();
-                    System.out.println(service.getUser(userId));
+                    System.out.println(service.getUserById(userId));
                 }
                 case (3) -> {
                     System.out.println("Введите id пользователя: ");
                     userId = sc.nextInt();
                     System.out.println("Введите новый email пользователя: ");
                     String email = sc.next();
-                    System.out.println(service.updateUserEmail(userId, email));
+                    service.updateUserEmail(userId, email);
+                    System.out.println("Email успешно обновлен");
                 }
                 case (4) -> {
                     System.out.println("Введите id пользователя: ");
                     userId = sc.nextInt();
                     System.out.println("Введите возраст пользователя: ");
                     Integer age = sc.nextInt();
-                    System.out.println(service.updateUserAge(userId, age));
+                    service.updateUserAge(userId, age);
+                    System.out.println("Возраст успешно обновлен");
                 }
                 case (5) -> {
                     System.out.println("Введите id пользователя: ");
                     userId = sc.nextInt();
-                    System.out.println(service.deleteUser(userId));
+                    service.deleteUser(userId);
+                    System.out.println("Пользователь успешно удален");
                 }
                 case (6) -> {
                     System.out.println("Введите имя пользователя");
@@ -56,3 +62,4 @@ public class UserService {
         }
     }
 }
+
