@@ -4,14 +4,21 @@ import com.github.tapotas1234.dao.UserDAO;
 import com.github.tapotas1234.model.User;
 import jakarta.persistence.PersistenceException;
 import org.hibernate.HibernateException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class TestUserService {
@@ -22,7 +29,6 @@ public class TestUserService {
     @InjectMocks
     private UserService userService;
 
-    // Тесы для addUser(User user)
     @Test
     void addUser_Success() {
         User mockUser = new User("John", 22);
@@ -44,10 +50,10 @@ public class TestUserService {
         assertDoesNotThrow(() ->
                 userService.addUser(mockUser)
         );
+
         verify(userDAO).save(mockUser);
     }
 
-    // Тесты для getUserById(Integer id)
     @Test
     void getUserById_Success() {
         User mockUser = new User("John", 32);
@@ -61,7 +67,7 @@ public class TestUserService {
 
     @Test
     void getUserById_NullWhenIdIsNull() {
-        assertNull(userService.getUserById(null));
+        Assertions.assertNull(userService.getUserById(null));
     }
 
     @Test
@@ -75,7 +81,7 @@ public class TestUserService {
     }
 
     @Test
-    void getUserById_NullIfThrowsPersistenceException() {
+    void getUserById_ShouldNotPropagateException_WhenDaoFails() {
         when(userDAO.findUser(10)).thenThrow(PersistenceException.class);
 
         User res = userService.getUserById(10);
@@ -83,7 +89,6 @@ public class TestUserService {
         assertNull(res);
     }
 
-    // Тесты для getAllUsers()
     @Test
     void getAllUsers_Success() {
         userService.getAllUsers();
@@ -92,13 +97,14 @@ public class TestUserService {
     }
 
     @Test
-    void getAllUsers_NullWhenThrowsException() {
+    void getAllUsers_ShouldNotPropagateException_WhenDaoFails() {
         when(userDAO.findAllUsers()).thenThrow(PersistenceException.class);
 
-        assertNull(userService.getAllUsers());
+        List<User> res = userService.getAllUsers();
+
+        assertNull(res);
     }
 
-    // Тесты для updateUserAge(Integer id, Integer newAge)
     @Test
     void updateUserAge_Success() {
         User mockUser = new User("John", 22);
@@ -111,7 +117,7 @@ public class TestUserService {
     }
 
     @Test
-    void updateUserAge_NullIfThrowsError() {
+    void updateUserAge_ShouldNotPropagateException_WhenDaoFails() {
         User mockUser = new User("John", 22);
         mockUser.setId(1);
         when(userService.getUserById(1)).thenReturn(mockUser);
@@ -120,10 +126,10 @@ public class TestUserService {
         assertDoesNotThrow(() ->
                 userService.updateUserAge(1, 23)
         );
+
         verify(userDAO).update(mockUser);
     }
 
-    // Тесты для updateUserEmail(Integer id, String email)
     @Test
     void updateUserEmail_Success() {
         User mockUser = new User("John", 22);
@@ -136,7 +142,7 @@ public class TestUserService {
     }
 
     @Test
-    void updateUserEmail_NullIfThrowsException() {
+    void updateUserEmail_ShouldNotPropagateException_WhenDaoFails() {
         User mockUser = new User("John", 22);
         mockUser.setId(1);
         when(userService.getUserById(1)).thenReturn(mockUser);
@@ -145,10 +151,10 @@ public class TestUserService {
         assertDoesNotThrow(() ->
                 userService.updateUserEmail(1, "ddd@mail.ru")
         );
+
         verify(userDAO).update(mockUser);
     }
 
-    // Тесты для deleteUser(Integer id)
     @Test
     void deleteUser_Success() {
         User mockUser = new User("John", 22);
@@ -161,7 +167,7 @@ public class TestUserService {
     }
 
     @Test
-    void deleteUser_NullWhenThrowsException() {
+    void deleteUser_ShouldNotPropagateException_WhenDaoFails() {
         User mockUser = new User("John", 22);
         mockUser.setId(1);
         when(userService.getUserById(1)).thenReturn(mockUser);
@@ -170,6 +176,7 @@ public class TestUserService {
         assertDoesNotThrow(() ->
                 userService.deleteUser(1)
         );
+
         verify(userDAO).delete(mockUser);
     }
 }
